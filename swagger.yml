@@ -1,0 +1,185 @@
+swagger: "2.0"
+info:
+  description: Python, Flask and Connexion server exposing remote SurfaceStreams OpenCV tracking capabilities.
+  version: "1.0.0"
+  title: SurfaceStreams Server ReST Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /processes:
+    get:
+      operationId: handlers.processes.read_all
+      tags:
+        - processes
+      summary: Read the entire list of processes
+      description: Read the list of processes
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of processes to get from processes
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering processes
+          required: false
+      responses:
+        200:
+          description: Successfully read processes list operation
+          schema:
+            type: array
+            items:
+              properties:
+                uuid:
+                  type: string
+                user_id:
+                  type: integer
+                server_ip:
+                  type: string
+                tuio_port:
+                  type: integer
+                frame_port:
+                  type: integer
+                frame_width:
+                  type: integer
+                frame_protocol:
+                  type: string
+                tracking_config:
+                  type: string
+
+    post:
+      operationId: handlers.processes.create
+      tags:
+        - processes
+      summary: Create a process and add it to the processes list
+      description: Create a new process in the processes list (-1 for int, and "" for string means parameter is unset)
+      parameters:
+        - name: process
+          in: body
+          description: Person to create
+          required: True
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: integer
+                description: User ID for the tracking process (affects created TUIO objects)
+                default: -1
+              server_ip:
+                type: string
+                description: Server IP for the outgoing tracked tuio data
+                default: "0.0.0.0"
+              tuio_port:
+                type: integer
+                description: Server port for the outgoing tracked tuio data (-1 means set dynamically)
+                default: -1
+              frame_port:
+                type: integer
+                description: Port at which Remote Tracker will receive frame input.
+                default: -1
+              frame_width:
+                type: integer
+                description: Matching width for the input frame.
+                default: 640
+              frame_protocol:
+                type: string
+                description: Encoding of the input frame
+                default: "jpeg"
+      responses:
+        201:
+          description: Successfully created process
+          schema:
+            properties:
+              uuid:
+                type: string
+              user_id:
+                type: integer
+              server_ip:
+                type: string
+              tuio_port:
+                type: integer
+              frame_port:
+                type: integer
+              frame_width:
+                type: integer
+              frame_protocol:
+                type: string
+              tracking_config:
+                type: string
+
+  /processes/{uuid}:
+    get:
+      operationId: handlers.processes.read_one
+      tags:
+        - processes
+      summary: Read one process from the processes list
+      description: Read one process from the processes list
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of the process to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read process from processes list operation
+          schema:
+            properties:
+              uuid:
+                type: string
+              user_id:
+                type: integer
+              server_ip:
+                type: string
+              tuio_port:
+                type: integer
+              frame_port:
+                type: integer
+              frame_width:
+                type: integer
+              frame_protocol:
+                type: string
+              tracking_config:
+                type: string
+
+    put:
+      operationId: handlers.processes.update_config
+      tags:
+        - processes
+      summary: update a tracking process with it's tracking config
+      description: Update a process in the processes list
+      parameters:
+        - name: uuid
+          in: path
+          type: string
+          required: True
+        - name: tracking_config
+          in: formData
+          description: tracking configuration to use
+          required: True
+          type: file
+      responses:
+        200:
+          description: Successfully updated config of process
+
+    delete:
+      operationId: handlers.processes.delete
+      tags:
+        - processes
+      summary: Delete a process from the processes list
+      description: Delete a process
+      parameters:
+        - name: uuid
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a process from processes list
