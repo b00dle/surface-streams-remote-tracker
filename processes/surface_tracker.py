@@ -143,6 +143,8 @@ if __name__ == "__main__":
     config_parser = TuioTrackingConfigParser(PATTERNS_CONFIG)
     osc_patterns, pattern_ids, osc_pointers, pointer_ids = apply_tracking_config(config_parser, tracker)
 
+    print("  > Config applied. Starting UDP capture")
+
     # initialize video frame receiver
     cap = CvUdpVideoReceiver(port=FRAME_PORT, protocol=PROTOCOL, width=MATCHING_WIDTH)
 

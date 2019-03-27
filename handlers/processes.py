@@ -7,14 +7,16 @@ PROCESSES collection
 from datetime import datetime
 import uuid
 import os
+import shutil
 
 # 3rd party modules
 from flask import make_response, abort
 from processes.surface_tracker import SurfaceTracker
 
+
 class _Process(object):
     def __init__(self, uuid, user_id, server_ip, tuio_port, frame_port,
-                 frame_width, frame_protocol):
+                 frame_width, frame_protocol, tracking_config=""):
         self.uuid = uuid
         self.user_id = user_id
         self.server_ip = server_ip
@@ -22,7 +24,7 @@ class _Process(object):
         self.frame_port = frame_port
         self.frame_width = frame_width
         self.frame_protocol = frame_protocol
-        self.tracking_config = ""
+        self.tracking_config = tracking_config
         self._is_running = False
         self._tracker = None
 
@@ -72,9 +74,9 @@ def remove_one(uuid):
         return
 
     PROCESSES[uuid].stop()
-    if len(PROCESSES[uuid].tracking_config) > 0:
-        if os.path.exists(PROCESSES[uuid].tracking_config):
-            os.remove(PROCESSES[uuid].tracking_config)
+    if os.path.exists("SERVER_DATA/" + str(uuid)):
+        shutil.rmtree("SERVER_DATA/" + str(uuid), ignore_errors=True)
+
     del PROCESSES[uuid]
 
 
@@ -103,6 +105,21 @@ def create_process(user_id, server_ip, tuio_port, frame_port, frame_width, frame
     return p.as_dict()
 
 
+def attach_tracking_config(uuid, tracking_config):
+    if not os.path.exists("SERVER_DATA/" + str(uuid)):
+        os.mkdir("SERVER_DATA/" + str(uuid))
+
+    filename = "SERVER_DATA/" + str(uuid) + "/" + tracking_config.filename
+
+    p = PROCESSES[uuid]
+    if len(PROCESSES[uuid].tracking_config) > 0:
+        if os.path.exists(PROCESSES[uuid].tracking_config):
+            os.remove(PROCESSES[uuid].tracking_config)
+    p.tracking_config = filename
+
+    tracking_config.save(filename)
+
+
 def read_all():
     res = [p.as_dict() for p in PROCESSES.values()]
     return res
@@ -118,12 +135,20 @@ def read_one(uuid):
     return res
 
 
-def create(process):
+def create(process, tracking_config=None):
     if len(PROCESSES) >= PROCESS_LIMIT:
         abort(
             406,
             "Process list already at maximum capacity"
         )
+
+    if tracking_config is not None:
+        mimetype = tracking_config.mimetype
+        if mimetype != "application/json":
+            abort(
+                406,
+                "Wrong mimetype. Expected application/json. Got {mime} not found".format(mime=mimetype)
+            )
 
     user_id = process.get("user_id", -1)
     server_ip = process.get("server_ip", "0.0.0.0")
@@ -132,37 +157,41 @@ def create(process):
     frame_width = process.get("frame_width", 640)
     frame_protocol = process.get("frame_protocol", -1)
 
-    return create_process(user_id, server_ip, tuio_port, frame_port,
-                          frame_width, frame_protocol)
+    p_dict = create_process(
+        user_id, server_ip, tuio_port, frame_port,
+        frame_width, frame_protocol
+    )
+
+    if tracking_config is not None:
+        attach_tracking_config(uuid=p_dict["uuid"], tracking_config=tracking_config)
+        p = PROCESSES[p_dict["uuid"]]
+        p.start()
+        p_dict = p.as_dict()
+
+    return p_dict
 
 
 def update_config(uuid, tracking_config):
     if uuid not in PROCESSES:
         abort(
-           404,
-           "Process with uuid {uuid} not found".format(uuid=uuid)
+            404,
+            "Process with uuid {uuid} not found".format(uuid=uuid)
         )
 
     mimetype = tracking_config.mimetype
-    if mimetype != "application/json":
+    if mimetype != "application/json" and not tracking_config.filename.endswith(".json"):
         abort(
             406,
             "Wrong mimetype. Expected application/json. Got {mime} not found".format(mime=mimetype)
         )
-    filename = "SERVER_DATA/" + str(uuid) + tracking_config.filename
-    tracking_config.save(filename)
 
+    attach_tracking_config(uuid, tracking_config)
+
+    # TODO post update to process if running
     p = PROCESSES[uuid]
-    if len(PROCESSES[uuid].tracking_config) > 0:
-        if os.path.exists(PROCESSES[uuid].tracking_config):
-            os.remove(PROCESSES[uuid].tracking_config)
-    p.tracking_config = filename
-    if not p.is_running():
-        p.start()
-
-    print("NEW CONFIG for", uuid)
-    print("  > mime", mimetype)
-    print("  > filename", filename)
+    if p.is_running():
+        p.stop()
+    p.start()
 
     return make_response(
         "Successfully updated process at uuid={uuid}".format(uuid=uuid), 200
@@ -187,3 +216,21 @@ def delete(uuid):
     #        406,
     #        "could not delete Process at uuid={uuid}".format(uuid=uuid)
     #    )
+
+
+def upload_resource(uuid, data):
+    if uuid not in PROCESSES:
+        abort(
+            404,
+            "Process with uuid {uuid} not found".format(uuid=uuid)
+        )
+
+    if not os.path.exists("SERVER_DATA/" + str(uuid)):
+        os.mkdir("SERVER_DATA/" + str(uuid))
+
+    filename = "SERVER_DATA/" + str(uuid) + "/" + data.filename
+    data.save(filename)
+
+    return make_response(
+        "Successfully uploaded resource {name} for process at uuid={uuid}".format(name=data.filename, uuid=uuid), 200
+    )

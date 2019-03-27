@@ -92,6 +92,11 @@ paths:
                 type: string
                 description: Encoding of the input frame
                 default: "jpeg"
+        - name: tracking_config
+          in: formData
+          description: tracking configuration to use
+          required: False
+          type: file
       responses:
         201:
           description: Successfully created process
@@ -183,3 +188,24 @@ paths:
       responses:
         200:
           description: Successfully deleted a process from processes list
+
+  /processes/{uuid}/resources:
+    put:
+      operationId: handlers.processes.upload_resource
+      tags:
+        - resources
+      summary: Upload a resource for a specific tracking process
+      description: Upload a resource for a tracking process
+      parameters:
+        - name: uuid
+          in: path
+          type: string
+          required: True
+        - name: data
+          in: formData
+          description: data of resource to upload
+          required: True
+          type: file
+      responses:
+        200:
+          description: Successfully uploaded resource for process.
