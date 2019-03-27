@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49839c3b-a13d-40a0-ba1f-7914f466415b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/processes.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/processes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/processes/surface_tracker.py" beforeDir="false" afterPath="$PROJECT_DIR$/processes/surface_tracker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuio/tuio_tracking_config_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuio/tuio_tracking_config_parser.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/surface_streams_remote_tracker$surface_streams_remote_tracker.coverage" NAME="surface-streams-remote-tracker Coverage Results" MODIFIED="1553703870281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/surface_streams_remote_tracker$surface_streams_remote_tracker.coverage" NAME="surface-streams-remote-tracker Coverage Results" MODIFIED="1553705947616" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="1387738515">
@@ -77,8 +74,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/handlers/processes.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1384">
-                  <caret line="109" column="34" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
+                <state relative-caret-position="270">
+                  <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
                   <folding>
                     <element signature="e#118#147#0" expanded="true" />
                     <marker date="1553703913884" expanded="true" signature="322:1749" ph="..." />
@@ -114,7 +111,7 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/swagger.yml">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="446">
@@ -123,11 +120,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/processes/surface_tracker.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="135">
-                  <caret line="139" lean-forward="true" selection-start-line="139" selection-end-line="139" />
+                <state relative-caret-position="1170">
+                  <caret line="78" column="32" lean-forward="true" selection-start-line="78" selection-start-column="32" selection-end-line="78" selection-end-column="32" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                   </folding>
@@ -138,8 +135,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tuio/tuio_tracking_config_parser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-885">
-                  <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+                <state relative-caret-position="45">
+                  <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
                 </state>
               </provider>
             </entry>
@@ -220,7 +217,17 @@
             <path>
               <item name="surface-streams-remote-tracker" type="b2602c69:ProjectViewProjectNode" />
               <item name="surface-streams-remote-tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="opencv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="surface-streams-remote-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="surface-streams-remote-tracker" type="462c0819:PsiDirectoryNode" />
               <item name="processes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="surface-streams-remote-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="surface-streams-remote-tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="tuio" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -378,17 +385,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/swagger.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="205" column="31" selection-start-line="205" selection-start-column="31" selection-end-line="205" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tuio/tuio_tracking_config_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-885">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        <state relative-caret-position="45">
+          <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/processes/surface_tracker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="139" lean-forward="true" selection-start-line="139" selection-end-line="139" />
+        <state relative-caret-position="1170">
+          <caret line="78" column="32" lean-forward="true" selection-start-line="78" selection-start-column="32" selection-end-line="78" selection-end-column="32" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -397,21 +411,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/handlers/processes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1384">
-          <caret line="109" column="34" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
+        <state relative-caret-position="270">
+          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
           <folding>
             <element signature="e#118#147#0" expanded="true" />
             <marker date="1553703913884" expanded="true" signature="322:1749" ph="..." />
             <marker date="1553703913884" expanded="true" signature="3050:3386" ph="..." />
             <marker date="1553703913884" expanded="true" signature="6235:6236" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/swagger.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="205" column="31" selection-start-line="205" selection-start-column="31" selection-end-line="205" selection-end-column="31" />
         </state>
       </provider>
     </entry>
