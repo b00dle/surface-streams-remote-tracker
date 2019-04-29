@@ -11,7 +11,7 @@ import shutil
 
 # 3rd party modules
 from flask import make_response, abort
-from processes.surface_tracker import SurfaceTracker
+from core.processes.surface_tracker import SurfaceTracker
 
 
 class _Process(object):
